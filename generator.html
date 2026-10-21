@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Undangan WhatsApp</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f1ed;
+            margin: 0;
+            padding: 20px;
+            color: #49352e;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #00000015;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            background: #8b6555;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .hasil {
+            margin-top: 20px;
+        }
+
+        .item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            overflow-wrap: anywhere;
+        }
+
+        .item a {
+            display: inline-block;
+            margin-top: 8px;
+            color: #087b45;
+        }
+
+        .petunjuk {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #76665f;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Generator Undangan</h1>
+
+    <p class="petunjuk">
+        Masukkan alamat website undangan yang sudah online,
+        lalu masukkan nama tamu dan nomor WhatsApp.
+    </p>
+
+    <label>Alamat Website Undangan</label>
+    <input
+        type="url"
+        id="website"
+        placeholder="https://nama-undangan.vercel.app"
+    >
+
+    <label>Daftar Nama dan Nomor WhatsApp</label>
+    <textarea
+        id="daftar"
+        placeholder="Rina Noge | 6281234567890&#10;Siti Aminah | 6289876543210"
+    ></textarea>
+
+    <p class="petunjuk">
+        Satu tamu per baris. Pisahkan nama dan nomor WhatsApp
+        menggunakan tanda |. Gunakan kode negara 62 tanpa tanda +.
+    </p>
+
+    <button onclick="buatLink()">Buat Link Undangan</button>
+
+    <div id="hasil" class="hasil"></div>
+</div>
+
+<script>
+function buatLink() {
+    const website = document.getElementById("website")
+        .value.trim().replace(/\/+$/, "");
+
+    const daftar = document.getElementById("daftar").value.trim();
+    const hasil = document.getElementById("hasil");
+
+    hasil.innerHTML = "";
+
+    if (!website || !daftar) {
+        alert("Isi alamat website dan daftar tamu terlebih dahulu.");
+        return;
+    }
+
+    const baris = daftar.split("\n");
+
+    baris.forEach(function(teks) {
+        const bagian = teks.split("|");
+
+        if (bagian.length < 2) {
+            return;
+        }
+
+        const nama = bagian[0].trim();
+        const nomor = bagian[1].trim().replace(/\D/g, "");
+
+        if (!nama || !nomor) {
+            return;
+        }
+
+        const linkUndangan =
+            website + "/?to=" + encodeURIComponent(nama) + "#home";
+
+        const pesan =
+            "Kepada " + nama +
+            ", kami mengundang Anda untuk hadir di acara pernikahan kami. " +
+            "Silakan buka undangan berikut: " + linkUndangan;
+
+        const linkWhatsApp =
+            "https://wa.me/" + nomor +
+            "?text=" + encodeURIComponent(pesan);
+
+        const item = document.createElement("div");
+        item.className = "item";
+
+        const judul = document.createElement("strong");
+        judul.textContent = nama;
+
+        const link = document.createElement("a");
+        link.href = linkWhatsApp;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Kirim lewat WhatsApp";
+
+        item.appendChild(judul);
+        item.appendChild(document.createElement("br"));
+        item.appendChild(link);
+
+        hasil.appendChild(item);
+    });
+
+    if (!hasil.hasChildNodes()) {
+        hasil.textContent =
+            "Format daftar belum benar. Gunakan Nama | NomorWhatsApp.";
+    }
+}
+</script>
+
+</body>
+</html>
