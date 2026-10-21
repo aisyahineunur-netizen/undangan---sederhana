@@ -46,7 +46,7 @@
                 </article>
                 <div class="ampersand" aria-hidden="true">&amp;</div>
                 <article class="person-card">
-                    <img src="thomas-christian-gs8kJSZxTVk-unsplash.jpg" alt="Potret calon mempelai wanita"
+                    <img src="thomas-christian-gs8kJSZxTVk-unsplash.jpg" alt="Potret calon mempelai wanita">
                     <p class="person-label">MEMPELAI WANITA</p>
                     <h3>Dinda Lestari</h3>
                     <p>Putri Pertama dari<br><strong>Bapak Rahman &amp; Ibu Nurhayati</strong></p>
@@ -116,7 +116,7 @@
                     <p class="eyebrow">KINDLY REPLY</p>
                     <h2>Konfirmasi Keadiran</h2>
                     <p>Doa dan kehadiran Anda menjadi kebahagiaan bagi kami.</p>
-                    <form class="rsvp-form" action="#" method="get">
+                    <form class="rsvp-form" id="form-rsvp">
                         <label for="nama">Nama Lengkap</label> 
                         <input id="nama" name="nama" type="text" placeholder="Tulis nama Anda" required>
                         <label for="kehadiran">Konfirmasi Kehadiran</label>
@@ -126,8 +126,10 @@
                             <option value="tidak-hadir">Maaf, belum bisa hadir</option>
                         </select>
                         <label for="pesan">Ucapan dan doa</label>
-                        <textarea id="pesan" name="pesan" rows="4" placeholder="Yulis ucapan untuk kedua mempelai"></textarea>
+                        <textarea id="pesan" name="pesan" rows="4" placeholder="Tulis ucapan untuk kedua mempelai"></textarea>
                         <button class="button button-dark" type="submit">Kirim konfirmasi</button>
+
+                        <p id="pesan-rsvp" role="status"></p>
                     </form>
                 </div> 
             </section>
@@ -168,7 +170,6 @@
                     <a href="#rsvp" class="menu-item" aria-label="RSVP">
                         <span class="menu-icon">✉</span>
                     </a>
-                    </a>
 
                     </nav>
         <script>
@@ -180,7 +181,7 @@ function getQueryParam(param) {
 
 // Mengambil nilai dari parameter 'to', 'kepada', atau 'nama'
 document.addEventListener("DOMContentLoaded", function() {
-    let namaTamu = getQueryParam('to') || getQueryParam('kepada') || getQueryParam('nama');
+    let namaTamu = getQueryParam('to') || getQueryParam('kepada');
     
     // Ganti karakter plus (+) atau persen (%20) menjadi spasi biasa (jika ada yang manual)
     if (namaTamu) {
@@ -230,6 +231,19 @@ if (tombolBuka && musik) {
             });
     });
 }
+
+    const formRsvp = document.getElementById("form-rsvp");
+    const pesanRsvp = document.getElementById("pesan-rsvp");
+
+              if (formRsvp && pesanRsvp) {
+                formRsvp.addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    pesanRsvp.textContent = " Terima kasih! Konfirmasi kehadiran anda telah diterima.";
+                    formRsvp.reset();
+
+                });
+
+              }
         </script>
     </body>
     </html>
