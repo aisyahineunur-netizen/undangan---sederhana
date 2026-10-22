@@ -55,16 +55,20 @@
                 </section>
 
                 <section class="quote-section">
+                    <div class="fade-in-up">
                     <div class="quote-mark">"</div>
                     <blockquote>Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan pasangan-pasangan untukmu agar kamu cenderung dan merasa tentram kepadanya.</blockquote>
                     <p>QS.Ar-Rum: 21</p>
+                    </div>
                 </section>
                 <section class="section event-section" id="acara">
+                    <div class="fade-in-up">
                     <p class="eyebrow">SAVE THE DATE</p>
                     <h2>Rangkaian Acara</h2>
                     <p class="section-lead">Catat tanggalnya dan luangkan waktu untuk merayakan hari istimewa bersama kami.</p>
+                    </div>
                 <div class="event-grid">
-                    <article class="event-card">
+                    <article class="event-card fade-in-up">
                         <div class="event-icon" aria-hidden="true">♡</div>
                         <p class="eyebrow">ACARA PERTAMA</p>
                         <h3>Akad Nikah</h3>
@@ -72,7 +76,7 @@
                         <p>08.00 WIB - Selesai</p>
                         <p>Masjid Al-Ikhlas<br>Jl.Melati No.10, Subang</p>
                     </article>
-                    <article class="event-card event-card-featured">
+                    <article class="event-card event-card-featured fade-in-up">
                         <div class="event-icon" aria-hidden="true">✧</div>
                         <p class="eyebrow">ACARA KEDUA</p>
                         <h3>Resepsi</h3>
@@ -244,6 +248,38 @@ if (tombolBuka && musik) {
                 });
 
               }
+            document.addEventListener("DOMContentLoaded", function () {
+                // Konfigurasi khusus untuk sistem deteksi halaman penuh (Slide-by-Slide)
+                const slideObserverOptions = {
+                    root: null,
+                    rootMargin: "0px",
+                    threshold: 0.5 /* Elemen pemicu aktif saat setengah bagian slide sudah masuk layar penuh */
+                };
+
+                const slideObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        // Ambil semua elemen animasi di dalam slide ini
+                        const animElements = entry.target.querySelectorAll('.fade-in-up');
+                        
+                        if (entry.isIntersecting) {
+                            // Saat slide aktif dibuka, munculkan animasinya
+                            animElements.forEach((el) => {
+                                el.classList.add('active');
+                            });
+                        } else {
+                            // Saat slide ditinggalkan/pindah, reset animasi ke posisi semula (transparan lagi)
+                            // Ini membuat efek animasi muncul kembali saat pengguna kembali ke slide ini
+                            animElements.forEach((el) => {
+                                el.classList.remove('active');
+                            });
+                        }
+                    });
+                }, slideObserverOptions);
+
+                // Daftarkan semua section (hero, mempelai, quote, acara) sebagai target slide
+                const slides = document.querySelectorAll('section');
+                slides.forEach((slide) => slideObserver.observe(slide));
+            });
         </script>
     </body>
     </html>
