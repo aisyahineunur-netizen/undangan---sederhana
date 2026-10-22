@@ -867,14 +867,14 @@ body {
 }
 }
 /* animasi seluruh bagian saat di scroll */
- @keyframes sectionReveal {
+ @keyframes slideSection {
     from {
        opacity: 0;
-       transform: translateY(45px);
+       transform: translateY(120px) scale(0.94);
     }
     to {
        opacity: 1;
-       transform: translateY(0);
+       transform: translateY(0) scale(1);
     }
  }
 /* efek muncul saat bagian memasuki layar */
@@ -888,7 +888,7 @@ body {
    .closing-section {
       animation: sectionReveal linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 35%;
+      animation-range: entry 0% entry 70%;
    }
 }
 @media (prefers-reduced-motion:reduce) {
