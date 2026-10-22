@@ -866,3 +866,29 @@ body {
    transition: none;
 }
 }
+/* animasi seluruh bagian saat di scroll */
+ @keyframes sectionReveal {
+    from {
+       opacity: 0;
+       transform: translateY(45px);
+    }
+    to {
+       opacity: 1;
+       transform: translateY(0);
+    }
+ }
+/* efek muncul saat bagian memasuki layar */
+@supports (animation-timeline:view()) {
+   .intro-section,
+   .quote-section,
+   .event-section,
+   .gallery-section,
+   .gift-section,
+   .rsvp-section,
+   .closing-section {
+      animation: sectionReveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+   }
+}
+
