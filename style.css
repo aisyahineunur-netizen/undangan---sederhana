@@ -785,3 +785,84 @@ body {
   color: white;
   cursor: pointer;
 }
+
+/* === ANIMASI ESTETIK UNDANGAN ==== */
+/* animasi muncul perlahan */
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+}
+
+/* Animasi naik perlahan */
+@keyframes risetUp {
+   from {
+      opacity: 0;
+      transform: translateY(0);
+   }
+}
+?* animasi halaman hero */
+.hero-content {
+   animation: risetUp 1.2s ease-out both;
+}
+
+/* tulisan judul */
+.hero h1 {
+   animation: fadeIn 1.8s ease both;
+}
+
+/* foto mempelai */
+.person-card img {
+   animation: fadeIn 1.5s ease both;
+   transition: transform 0.5s ease, box shadow 0.5s ease;
+}
+.person-card img:hover {
+   transform: scale(1.04);
+   box-shadow: 0 10px 28px rgba(140, 81, 75, 0.18);
+}
+/* fhoto galeri */
+.gallery-grid img {
+   transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.gallery-grid img:hover {
+   transform: scale(1.04);
+   filter: brightness(1.05);
+}
+/*kartu acara dan hadiah */
+.event-card,
+.gift-card {
+   transition: transform 0.35s ease,
+   box-shadow 0.35s ease;
+}
+.event-card:hover,
+.gift-card:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 10px 24px rgba(140, 81, 75, 0.12);
+}
+/* tombol menu bawah */
+.bottom-menu .menu-item {
+   transition: transform 0.25s ease, color 0.25s ease;
+}
+.bottom-menu .menu-item:hover {
+   transform: translateY(-4px);
+}
+/* hormati pengaturan pengurangan animasi */
+@media (prefers-reduced-motion:reduce) {
+   .hero-content,
+   .hero h1,
+   .person-card img {
+      animation: none;
+   }
+
+.person-card img,
+.gallery-grid img,
+.event-card,
+.gift-card,
+.bottom-menu .menu-item {
+   transition: none;
+}
+}
