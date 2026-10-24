@@ -10,6 +10,11 @@
   <link href="style.css" rel="stylesheet">
 </head>
 <body class="invitation-page">
+  <!--fITUR MUSIK LATAR  -->
+  <audio id="musik-undangan" autoplay lopp>
+    <source src="musik.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung pemutar musik.
+  </audio>
   <main>
     <section id="countdown" class="section-pad countdown-section text-center section-anchor">
       <div class="container reveal">
@@ -46,7 +51,7 @@
     </section>
 
     <section id="acara" class="section-pad floral-section text-center section-anchor">
-      <div class="container reveal scroll-rise">
+      <div class="container reveal">
         <p class="eyebrow text-muted">CATAT TANGGALNYA</p>
         <h2 class="section-title">Waktu & Acara</h2>
         <div class="row justify-content-center g-4 mt-2">
@@ -67,7 +72,7 @@
     </section>
 
     <section id="lokasi" class="section-pad location-section text-center section-anchor">
-      <div class="container reveal scroll-rise">
+      <div class="container reveal">
         <p class="eyebrow">LOKASI ACARA</p>
         <h2 class="section-title">Temukan Lokasi Kami</h2>
         <p class="section-copy mx-auto">Gedung / nama tempat acara, Subang, Jawa Barat</p>
@@ -82,7 +87,7 @@
     </section>
 
     <section id="quote" class="section-pad quote-section text-center section-anchor">
-      <div class="container reveal scroll-rise">
+      <div class="container reveal">
         <i class="bi bi-quote quote-mark"></i>
         <blockquote class="quote-text mx-auto">“Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri agar kamu merasa tenteram kepadanya.”</blockquote>
         <p class="mb-0">QS. Ar-Rum: 21</p>
@@ -109,6 +114,41 @@
       </div>
     </section>
 
+    <section id="rsvp" class="section-pad text-center section-anchor">
+      <div class="container reveal">
+        <h2 class="section-title">Konfirmasi Kehadiran</h2>
+        <p class="section-copy mx-auto">Mohon konfirmasi kehadiran anda dengan mengisi formulir dibawah ini:</p>
+
+        <!--Form rsvp -->
+        <form class="rsvp-form mt-4 mx-auto" style="max-width: 500px;">
+          <div class="mb-3 text-start">
+            <label for="nama" class="form-label">Nama Lengkap</label>
+            <input type="text" class="form-control" id="nama" placeholder="Masukan nama anda" required>
+          </div>
+          <div class="mb-3 text-start">
+            <label for="status" class="form-label">Konfirmasi Kehadiran</label>
+            <select class="form-select" id="status" required>
+              <option value="" selected disabled>Apakah anda akan hadir?</option>
+              <option value="Hadir">Ya, saya akan hadir?</option>
+              <option value="tidak-hadir">Maaf, Saya tidak bisa hadir?</option>
+              <option value="ragu">Masih ragu-ragu</option>
+            </select>
+          </div>
+          <div class="mb-3 text-start">
+            <label for="jumlah" class="form-label">Jumlah Tamu</label>
+            <select class="form-select" id="jumlah" required>
+              <option value="1">1 orang</option>
+              <option value="2">2 orang</option>
+            </select>
+          </div>
+          <div class="mb-3 text-start">
+            <label for="ucapan" class="form-label">Ucapan & Doa Restu</label>
+            <textarea class="form-control" id="ucapan" rows="3" placeholder="Tulis ucapan selamat anda disini..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 mt-2">Kirim Konfirmasi</button>
+        </form>
+      </div>
+    </section>
     <section id="penutup" class="section-pad closing-section text-center section-anchor">
       <div class="container reveal">
         <h2 class="section-title">Terima Kasih</h2>
@@ -123,8 +163,10 @@
     <a href="#mempelai"><i class="bi bi-people"></i><span>Mempelai</span></a>
     <a href="#acara"><i class="bi bi-calendar-heart"></i><span>Acara</span></a>
     <a href="#lokasi"><i class="bi bi-geo-alt"></i><span>Lokasi</span></a>
+    <a href="#rsvp"><i class="bi bi-envelope-heart"></i><span>Rsvp</span></a>
     <a href="#quote"><i class="bi bi-chat-quote"></i><span>Quote</span></a>
     <a href="#galeri"><i class="bi bi-images"></i><span>Galeri</span></a>
+    <a href="#music" id="music-toggle"><i class="bi bi-music-note-beamed"></i><span>Musik</span></a>
   </nav>
 
   <script src="script.js"></script>
