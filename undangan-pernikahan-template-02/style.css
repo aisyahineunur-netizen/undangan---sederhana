@@ -79,25 +79,3 @@ h1, h2, h3, .person-name { font-family: 'Playfair Display', serif; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
-
-/* Animasi muncul dari bawah saat di-scroll */
-.scroll-rise {
-  opacity: 0;
-  transform: translateY(55px);
-  transition:
-    opacity 0.9s ease,
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.scroll-rise.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-rise {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
