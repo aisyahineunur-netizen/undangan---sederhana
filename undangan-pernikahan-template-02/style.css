@@ -115,7 +115,7 @@ h1, h2, h3, .person-name { font-family: 'Playfair Display', serif; }
   transform: translateY(-2px);
 }
 body {
-  padding-bottom: 70px;
+  padding-bottom: 60px;
 }
 #rsvp {
   background-color: #f8f9fa;
