@@ -20,15 +20,20 @@ function updateCountdown() {
   const minutes = Math.floor((distance / (1000 * 60)) % 60);
   const seconds = Math.floor((distance / 1000) % 60);
 
-  document.getElementById('days').textContent = days;
-  document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-  document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-  document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+  const dEl = document.getElementById('days');
+  const hEl = document.getElementById('hours');
+  const mEl = document.getElementById('minutes');
+  const sEl = document.getElementById('seconds');
+
+  if(dEl) dEl.textContent = days;
+  if(hEl) hEl.textContent = String(hours).padStart(2, '0');
+  if(mEl) mEl.textContent = String(minutes).padStart(2, '0');
+  if(sEl) sEl.textContent = String(seconds).padStart(2, '0');
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// Efek scroll reveal: elemen baru muncul saat masuk ke area layar.
+// Efek scroll reveal aman
 const revealObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -39,12 +44,14 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
 }, { threshold: 0.14 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// Tandai ikon menu yang paling dekat dengan bagian aktif.
-const navLinks = [...document.querySelectorAll('.bottom-nav a')];
+// Ambil element navigasi tunggal
+const globalNavLinks = document.querySelectorAll('.bottom-nav a');
+
+// Tandai ikon menu aktif
 const sectionObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      navLinks.forEach(link => {
+      globalNavLinks.forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
       });
     }
@@ -52,7 +59,7 @@ const sectionObserver = new IntersectionObserver(entries => {
 }, { rootMargin: '-35% 0px -55% 0px' });
 document.querySelectorAll('.section-anchor').forEach(section => sectionObserver.observe(section));
 
-// Nama tamu dari URL, misalnya isi.html?to=Ibu%20Sari
+// Nama tamu dari URL
 const guestParams = new URLSearchParams(window.location.search);
 const guestName = guestParams.get('to');
 if (guestName) {
@@ -60,100 +67,77 @@ if (guestName) {
   if (note) note.textContent = `Kepada ${guestName}, kami mengundang Anda untuk menjadi bagian dari hari bahagia kami.`;
 }
 
-/* Animasi scroll dari bawah ke atas */
+/* Animasi scroll dari bawah ke atas aman */
 const riseElements = document.querySelectorAll(".scroll-rise");
-
 const riseObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
       } else {
-        // Reset agar animasi bisa muncul lagi saat di-scroll ulang
         entry.target.classList.remove("is-visible");
       }
     });
   },
-  {
-    threshold: 0.15,
-    rootMargin: "0px 0px -30px 0px"
-  }
+  { threshold: 0.15, rootMargin: "0px 0px -30px 0px" }
 );
-
 riseElements.forEach((element) => {
   riseObserver.observe(element);
 });
 
-// ==========================================
-// 1. FUNGSI PLAY / PAUSE MUSIK
-// ==========================================
+// Musim / Audio Player
 const musicToggle = document.getElementById('music-toggle');
 const weddingSong = document.getElementById('wedding-song');
 let isPlaying = false;
 
-musicToggle.addEventListener('click', function(e) {
-  e.preventDefault(); // Mencegah link pindah halaman
-  
-  const icon = musicToggle.querySelector('i');
-  
-  if (!isPlaying) {
-    weddingSong.play();
-    isPlaying = true;
-    icon.className = "bi bi-disc spinning"; // Mengubah ikon jadi CD/Piringan Hitam
-  } else {
-    weddingSong.pause();
-    isPlaying = false;
-    icon.className = "bi bi-music-note-beamed"; // Kembali ke ikon not balok saat pause
-  }
-});
+if (musicToggle && weddingSong) {
+  musicToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    const icon = musicToggle.querySelector('i');
+    if (!isPlaying) {
+      weddingSong.play();
+      isPlaying = true;
+      if (icon) icon.className = "bi bi-disc spinning"; 
+    } else {
+      weddingSong.pause();
+      isPlaying = false;
+      if (icon) icon.className = "bi bi-music-note-beamed"; 
+    }
+  });
+}
 
-
-// ==========================================
-// 2. FUNGSI PENGIRIMAN FORM RSVP
-// ==========================================
+// RSVP Form
 const rsvpForm = document.querySelector('.rsvp-form');
-
 if (rsvpForm) {
   rsvpForm.addEventListener('submit', function(e) {
-    e.preventDefault(); // Mencegah halaman refresh otomatis
-    
-    // Mengambil data dari form
-    const nama = document.getElementById('nama').value;
-    const status = document.getElementById('status').value;
-    const jumlah = document.getElementById('jumlah').value;
-    const ucapan = document.getElementById('ucapan').value;
-    
-    // Tampilkan notifikasi sukses sederhana (Bisa diganti SweetAlert/WhatsApp Integration nanti)
+    e.preventDefault();
+    const namaEl = document.getElementById('nama');
+    const statusEl = document.getElementById('status');
+    const nama = namaEl ? namaEl.value : 'Tamu';
+    const status = statusEl ? statusEl.value : '';
     alert(`Terima kasih ${nama}! Konfirmasi kehadiran Anda (${status}) telah berhasil dikirim.`);
-    
-    // Reset form setelah dikirim
     rsvpForm.reset();
   });
 }
 
-
-// ==========================================
-// 3. FUNGSI AKTIFKAN MENU NAVIGASI SAAT DI-SCROLL
-// ==========================================
+// Sinkronisasi Scroll Navigasi
 const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.bottom-nav a');
-
 window.addEventListener('scroll', () => {
   let current = '';
-  
   sections.forEach(section => {
     const sectionTop = section.offsetTop;
     const sectionHeight = section.clientHeight;
-    // Deteksi jika posisi scroll sudah masuk ke area section tertentu
     if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
       current = section.getAttribute('id');
     }
   });
-
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href').includes(current)) {
-      link.classList.add('active');
+  globalNavLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href) {
+      link.classList.remove('active');
+      if (href.includes(current)) {
+        link.classList.add('active');
+      }
     }
   });
 });
